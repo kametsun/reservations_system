@@ -7,8 +7,7 @@ import java.sql.Time;
 
 public class Facility {
     private String name;
-    private Time openTime;
-    private Time closeTime;
+    private Time openTime, closeTime;
     private String explanation;
 
     public Facility(String name, Time openTime, Time closeTime, String explanation) {
@@ -18,23 +17,9 @@ public class Facility {
         setExplanation(explanation);
     }
 
-    /*
-     * mysql> DESCRIBE facilities;
-     * +-------------+-------------+------+-----+---------+-------+
-     * | Field       | Type        | Null | Key | Default | Extra |
-     * +-------------+-------------+------+-----+---------+-------+
-     * | name        | varchar(30) | NO   |     | NULL    |       |
-     * | open_time   | time        | NO   |     | NULL    |       |
-     * | close_time  | time        | NO   |     | NULL    |       |
-     * | explanation | text        | NO   |     | NULL    |       |
-     * +-------------+-------------+------+-----+---------+-------+
-     * 4 rows in set (0.00 sec)
-     */
-
     //施設登録メソッド
     public void insertFacility(Facility facility){
         String res = "";
-
         MyDB.connectDB();
 
         try {
@@ -44,12 +29,11 @@ public class Facility {
             int resInt = MyDB.sqlStmt.executeUpdate(sql);
             res = resInt + "行登録しました。";
         } catch (SQLException e) {
-            res = "ユーザ登録にエラーが発生しました。";
+            res = "施設登録にエラーが発生しました。";
             throw new RuntimeException(e);
         } finally {
             MyDB.closeDB();
         }
-
         System.out.println(res);
     }
 

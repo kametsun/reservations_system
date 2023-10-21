@@ -1,13 +1,11 @@
 package initialize;
 
-import model.User;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.User;
 
 public class InitializeUser {
-
     //初期データ挿入メソッド
     protected static void initialize(){
         //初期化
@@ -24,9 +22,8 @@ public class InitializeUser {
     }
 
     //ユーザテーブルクリアーメソッド
-    protected static void clearUsersTable() {
+    private static void clearUsersTable() {
         String sql = "delete from db_reservation.users;";
-
         MyDB.connectDB();
 
         try {

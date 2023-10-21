@@ -1,16 +1,12 @@
 package model;
 
-import initialize.MyDB;
-
 import java.sql.SQLException;
+import initialize.MyDB;
 
 public class User {
     private String userID;
-    private String name;
-    private String address;
-    private String phoneNumber;
-    private String email;
-    private String password;
+    private String name, address;
+    private String phoneNumber, email, password;
 
     public User(String userID, String name, String address, String phoneNumber, String email, String password){
         setUserID(userID);
@@ -39,7 +35,6 @@ public class User {
         } finally {
             MyDB.closeDB();
         }
-
         System.out.println(res);
     }
 
