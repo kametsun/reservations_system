@@ -7,7 +7,6 @@ public class Initialize {
         InitializeUser.initialize();
         InitializeFacility.initialize();
         InitializeReservation.initialize();
-
         System.out.println("初期データの挿入完了しました。");
     }
 }
