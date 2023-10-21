@@ -7,7 +7,6 @@ import java.util.List;
 import model.Facility;
 
 public class InitializeFacility {
-
     protected static void initialize(){
         String[] types = {"小ホール", "大会議室", "小会議室"};
         Time[] openTimes = {Time.valueOf("09:00:00"), Time.valueOf("10:00:00")};
