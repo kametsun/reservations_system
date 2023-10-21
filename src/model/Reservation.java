@@ -39,49 +39,26 @@ public class Reservation {
         System.out.println(res);
     }
 
-    public int getReservationID() {
-        return reservationID;
-    }
-
-    private void setReservationID(int reservationID) {
-        this.reservationID = reservationID;
-    }
-
-    public String getReserverID() {
-        return reserverID;
-    }
 
     private void setReserverID(String reserverID) {
         this.reserverID = reserverID;
     }
 
-    public String getFacilityName() {
-        return facilityName;
-    }
 
     private void setFacilityName(String facilityName) {
         this.facilityName = facilityName;
     }
 
-    public Date getDate() {
-        return date;
-    }
 
     private void setDate(Timestamp date) {
         this.date = date;
     }
 
-    public Time getStartTime() {
-        return startTime;
-    }
 
     private void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
-        return endTime;
-    }
 
     private void setEndTime(Time endTime) {
         this.endTime = endTime;

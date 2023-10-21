@@ -38,30 +38,6 @@ public class User {
         System.out.println(res);
     }
 
-    public String getUserID() {
-        return userID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     private void setUserID(String userID) {
         this.userID = userID;
     }

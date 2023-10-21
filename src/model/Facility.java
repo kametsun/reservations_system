@@ -37,32 +37,17 @@ public class Facility {
         System.out.println(res);
     }
 
-    public String getName() {
-        return name;
-    }
 
     private void setName(String name) {
         this.name = name;
-    }
-
-    public Time getOpenTime() {
-        return openTime;
     }
 
     private void setOpenTime(Time openTime) {
         this.openTime = openTime;
     }
 
-    public Time getCloseTime() {
-        return closeTime;
-    }
-
     private void setCloseTime(Time closeTime) {
         this.closeTime = closeTime;
-    }
-
-    public String getExplanation() {
-        return explanation;
     }
 
     private void setExplanation(String explanation) {
