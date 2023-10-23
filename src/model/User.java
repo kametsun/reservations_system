@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import initialize.MyDB;
 
@@ -18,9 +19,8 @@ public class User {
     }
 
     //ユーザ登録メソッド
-    public void insertUser(User user){
+    public static void insert(User user){
         String res = "";
-
         MyDB.connectDB();
 
         try {
@@ -31,6 +31,30 @@ public class User {
             res = resInt + "行登録しました。";
         } catch (SQLException e) {
             res = "ユーザ登録にエラーが発生しました。";
+            throw new RuntimeException(e);
+        } finally {
+            MyDB.closeDB();
+        }
+        System.out.println(res);
+    }
+
+    public static void selectAll(){
+        MyDB.connectDB();
+        String res = "";
+
+        try {
+            String sql = "SELECT * FROM db_reservation.users;";
+            ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+            while (rs.next()) {
+                String user_id = rs.getString("user_id");
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                String phone_number = rs.getString("phone_number");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                res += user_id + " " + name + " ~ " + address + " " + phone_number + " " + email + " " + password + "\n";
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             MyDB.closeDB();

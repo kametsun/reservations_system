@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Reservation;
 
-
 public class InitializeReservation {
     protected static void initialize() throws ParseException {
         String[]  testUserIDs = {
@@ -56,7 +55,7 @@ public class InitializeReservation {
         }
 
         for (Reservation reservation : reservations){
-            reservation.insertReservation(reservation);
+            reservation.insert(reservation);
         }
     }
 

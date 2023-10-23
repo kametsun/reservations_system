@@ -9,7 +9,7 @@ public class InitializeUser {
     //初期データ挿入メソッド
     protected static void initialize(){
         //初期化
-        clearUsersTable();
+        clearTable();
 
         List<User> users = new ArrayList<>();
         users.add(new User("watanabe", "渡辺博芳", "宇都宮市豊郷台1-1", "0286277111", "hiro@ics.teikyo-u.ac.jp", "pass0001"));
@@ -17,12 +17,12 @@ public class InitializeUser {
         users.add(new User("kametsun", "亀窪翼", "静岡県静岡市清水区123-4", "08012345678", "tsubasa@teikyo-u.ac.jp", "pass0003"));
 
         for (User user : users){
-            user.insertUser(user);
+            user.insert(user);
         }
     }
 
     //ユーザテーブルクリアーメソッド
-    private static void clearUsersTable() {
+    private static void clearTable() {
         String sql = "delete from db_reservation.users;";
         MyDB.connectDB();
 

@@ -1,9 +1,9 @@
 package model;
 
-import initialize.MyDB;
-
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import initialize.MyDB;
 
 public class Facility {
     private String name;
@@ -18,7 +18,7 @@ public class Facility {
     }
 
     //施設登録メソッド
-    public void insertFacility(Facility facility){
+    public static void insert(Facility facility){
         String res = "";
         MyDB.connectDB();
 
@@ -37,6 +37,27 @@ public class Facility {
         System.out.println(res);
     }
 
+    public static void selectAll(){
+        MyDB.connectDB();
+        String res = "";
+
+        try {
+            String sql = "SELECT * FROM db_reservation.facilities;";
+            ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+            while (rs.next()) {
+                String name = rs.getString("name");
+                String openTime = rs.getString("open_time");
+                String closeTime = rs.getString("close_time");
+                String explanation = rs.getString("explanation");
+                res += name + " " + openTime + " ~ " + closeTime + explanation + "\n";
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            MyDB.closeDB();
+        }
+        System.out.println(res);
+    }
 
     private void setName(String name) {
         this.name = name;

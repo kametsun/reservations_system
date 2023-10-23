@@ -12,12 +12,12 @@ public class InitializeFacility {
         Time[] openTimes = {Time.valueOf("09:00:00"), Time.valueOf("10:00:00")};
         Time[] closeTimes = {Time.valueOf("20:00:00"), Time.valueOf("21:00:00")};
         String[] explanations = {
-                " 客席数: 500 利用可能時間 10時から21時", //小ホール
-                " 客席数: 80 利用可能時間 9時から20時",   //大会議室
-                " 客席数: 20 利用可能時間 9時から20時"    //小会議室
+                " 客席数: 500 利用可能時間: 10時から21時", //小ホール
+                " 客席数: 80 利用可能時間: 9時から20時",   //大会議室
+                " 客席数: 20 利用可能時間: 9時から20時"    //小会議室
         };
 
-        clearFacilitiesTable();
+        clearTable();
 
         List<Facility> facilities = new ArrayList<>();
         facilities.add(new Facility(types[0], openTimes[1], closeTimes[1], types[0] + explanations[0]));
@@ -28,12 +28,12 @@ public class InitializeFacility {
             facilities.add(new Facility(types[2] + i, openTimes[0], closeTimes[0], types[2] + i + explanations[2]));
         }
         for(Facility facility : facilities){
-            facility.insertFacility(facility);
+            facility.insert(facility);
         }
     }
 
     //施設テーブルクリアーメソッド
-    private static void clearFacilitiesTable() {
+    private static void clearTable() {
         String sql = "delete from db_reservation.facilities;";
         MyDB.connectDB();
 

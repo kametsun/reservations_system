@@ -8,7 +8,6 @@ import java.sql.Statement;
 public class MyDB {
     private static final String userID = "reservation_user";
     private static final String pass = "pass0004";
-
     public static Connection sqlCon;
     public static Statement sqlStmt;
 

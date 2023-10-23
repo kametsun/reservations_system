@@ -1,9 +1,9 @@
 package model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Date;
 import initialize.MyDB;
 public class Reservation {
     private int reservationID;
@@ -20,7 +20,7 @@ public class Reservation {
     }
 
     //予約登録メソッド
-    public void insertReservation(Reservation reservation){
+    public static void insert(Reservation reservation){
         String res = "";
         MyDB.connectDB();
 
@@ -32,6 +32,29 @@ public class Reservation {
             res = resInt + "行登録しました。";
         } catch (SQLException e) {
             res = "予約登録にエラーが発生しました。";
+            throw new RuntimeException(e);
+        } finally {
+            MyDB.closeDB();
+        }
+        System.out.println(res);
+    }
+
+    public static void selectAll(){
+        MyDB.connectDB();
+        String res = "";
+
+        try {
+            String sql = "SELECT * FROM db_reservation.reservations;";
+            ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+            while (rs.next()) {
+                String date = rs.getString("date");
+                String startTime = rs.getString("start_time");
+                String endTime = rs.getString("end_time");
+                String userID = rs.getString("reserver_id");
+                String facilityName = rs.getString("facility_name");
+                res += date + " " + startTime + " ~ " + endTime + " " + userID + " " + facilityName + "\n";
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             MyDB.closeDB();
