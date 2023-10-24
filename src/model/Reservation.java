@@ -19,7 +19,7 @@ public class Reservation {
         setEndTime(endTime);
     }
 
-    //予約登録メソッド
+    //予約登録
     public static void insert(Reservation reservation){
         String res = "";
         MyDB.connectDB();
@@ -39,6 +39,7 @@ public class Reservation {
         System.out.println(res);
     }
 
+    //全件取得
     public static void selectAll(){
         MyDB.connectDB();
         String res = "";

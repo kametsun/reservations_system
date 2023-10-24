@@ -49,7 +49,7 @@ public class Facility {
                 String openTime = rs.getString("open_time");
                 String closeTime = rs.getString("close_time");
                 String explanation = rs.getString("explanation");
-                res += name + " " + openTime + " ~ " + closeTime + explanation + "\n";
+                res += name + " " + openTime + " ~ " + closeTime + " " + explanation + "\n";
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

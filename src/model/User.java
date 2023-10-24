@@ -18,7 +18,7 @@ public class User {
         setPassword(password);
     }
 
-    //ユーザ登録メソッド
+    //ユーザ登録
     public static void insert(User user){
         String res = "";
         MyDB.connectDB();
@@ -38,6 +38,7 @@ public class User {
         System.out.println(res);
     }
 
+    //全件取得
     public static void selectAll(){
         MyDB.connectDB();
         String res = "";

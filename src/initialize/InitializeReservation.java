@@ -10,6 +10,7 @@ import model.Reservation;
 
 public class InitializeReservation {
     protected static void initialize() throws ParseException {
+        //テストデータ
         String[]  testUserIDs = {
                 "watanabe",
                 "teikyo",
@@ -40,7 +41,7 @@ public class InitializeReservation {
                 "小ホール2"
         };
 
-        clearReservationsTable();
+        clearTable();
         List<Reservation> reservations = new ArrayList<>();
 
         for(int i = 0; i < testUserIDs.length; i++){
@@ -59,8 +60,8 @@ public class InitializeReservation {
         }
     }
 
-    //予約テーブルクリアーメソッド
-    private static void clearReservationsTable() {
+    //予約テーブルクリア
+    private static void clearTable() {
         String sql = "delete from db_reservation.reservations;";
         MyDB.connectDB();
 
