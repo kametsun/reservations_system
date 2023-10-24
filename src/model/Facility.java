@@ -3,6 +3,9 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+
 import initialize.MyDB;
 
 public class Facility {
@@ -57,6 +60,26 @@ public class Facility {
             MyDB.closeDB();
         }
         System.out.println(res);
+    }
+
+    public static List<String> getAllFacilityNames(){
+        List<String> facilityNames = new ArrayList<>();
+        MyDB.connectDB();
+
+        try {
+            String sql = "SELECT name FROM db_reservation.facilities;";
+            ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+            while (rs.next()) {
+                String name = rs.getString("name");
+                facilityNames.add(name);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            MyDB.closeDB();
+        }
+
+        return facilityNames;
     }
 
     private void setName(String name) {

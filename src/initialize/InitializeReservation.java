@@ -1,9 +1,10 @@
 package initialize;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import model.Reservation;
@@ -14,41 +15,47 @@ public class InitializeReservation {
         String[]  testUserIDs = {
                 "watanabe",
                 "teikyo",
-                "kametsun"
+                "kametsun",
+                "mondoujou"
         };
 
         Time[] testStartTime = {
                 Time.valueOf("09:00:00"),
                 Time.valueOf("10:00:00"),
-                Time.valueOf("11:00:00")
+                Time.valueOf("11:00:00"),
+                Time.valueOf("15:00:00")
         };
 
         Time[] testEndTime = {
                 Time.valueOf("12:00:00"),
                 Time.valueOf("13:00:00"),
-                Time.valueOf("14:00:00")
+                Time.valueOf("14:00:00"),
+                Time.valueOf("17:00:00")
         };
 
-        String[] testDateFormats = {
+        String[] testDate = {
                 "2023-12-24",
                 "2023-12-25",
+                "2024-01-01",
                 "2024-01-01"
         };
 
         String[] testFacilityName = {
                 "小会議室4",
                 "大会議室1",
-                "小ホール2"
+                "小ホール",
+                "小ホール"
         };
 
         clearTable();
         List<Reservation> reservations = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         for(int i = 0; i < testUserIDs.length; i++){
             Reservation reservation = new Reservation(
                     testUserIDs[i],
                     testFacilityName[i],
-                    Timestamp.valueOf(testDateFormats[i] + " " + testStartTime[i]),
+                    Date.valueOf(testDate[i]),
                     testStartTime[i],
                     testEndTime[i]
             );

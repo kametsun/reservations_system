@@ -1,17 +1,14 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.sql.*;
 import initialize.MyDB;
 public class Reservation {
     private int reservationID;
     private String reserverID, facilityName;
-    private Timestamp date;
+    private Date date;
     private Time startTime, endTime;
 
-    public Reservation(String reserverID, String facilityName, Timestamp date, Time startTime, Time endTime) {
+    public Reservation(String reserverID, String facilityName, Date date, Time startTime, Time endTime) {
         setReserverID(reserverID);
         setFacilityName(facilityName);
         setDate(date);
@@ -74,7 +71,7 @@ public class Reservation {
     }
 
 
-    private void setDate(Timestamp date) {
+    private void setDate(Date date) {
         this.date = date;
     }
 
