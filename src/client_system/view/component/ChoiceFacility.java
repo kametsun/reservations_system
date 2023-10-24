@@ -1,9 +1,8 @@
 package client_system.view.component;
 
-import model.Facility;
-
 import java.awt.*;
 import java.util.List;
+import model.Facility;
 
 public class ChoiceFacility extends Choice {
     public ChoiceFacility(){
