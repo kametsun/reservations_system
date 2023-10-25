@@ -24,17 +24,21 @@ public class ReservationController {
                 MyDB.connectDB();
                 ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
                 int cnt = 1;
-                if (!rs.next()){
-                    res = "予約はありません。";
-                }
+                boolean hasReservation = false;
                 while (rs.next()) {
+                    hasReservation = true;
+                    String id = rs.getString("reservation_id");
                     String startTime = rs.getString("start_time");
                     String endTime = rs.getString("end_time");
                     String date = rs.getString("date");
                     String facilityName = rs.getString("facility_name");
                     String explanation = Facility.getExplanation(facilityName);
-                    res += "[" + cnt + "]  " + date + " " + facilityName + " " + startTime + " ～ " + endTime + "\n\n[施設概要]\n" + explanation + "\n\n";
+                    res += "[" + cnt + "]  " + date + " " + facilityName + " " + startTime + " ～ " + endTime + "\n\n[施設概要]\n\t" + explanation + "\n\n";
                     cnt++;
+                }
+
+                if (!hasReservation) {
+                    res = "予約はありません。";
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -100,8 +104,7 @@ public class ReservationController {
     }
 
     public String getFacilityExplanation(String facilityName) {
-        String res = Facility.getExplanation(facilityName);
-        return res;
+        return Facility.getExplanation(facilityName);
     }
 
     public String getReservationOn(String facilityName, String ryer_str, String rmonth_str, String rday_str){

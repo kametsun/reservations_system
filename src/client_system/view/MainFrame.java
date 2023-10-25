@@ -43,7 +43,7 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
 
         //上部パネルの上パネルに || 予約システム || というラベルと || ログイン ||　ボタンを追加
         panelNorthSub1 = new Panel();
-        panelNorthSub1.add(new Label("施設予約システム                "));
+        panelNorthSub1.add(new Label("施設予約システム                      "));
         panelNorthSub1.add(btLog);
 
         //上部パネルの中央パネルに|||施設||[施設名選択]チョイス [概要説明]ボタンを追加
@@ -88,6 +88,7 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
         panelSouth.add(btConfirm);
         panelSouth.add(new Label("   "));
         panelSouth.add(btConfirm);
+        panelSouth.add(new Label("   "));
         panelSouth.add(btCancel);
         //メイン画面に下部パネル追加
         add(panelSouth, BorderLayout.SOUTH);
