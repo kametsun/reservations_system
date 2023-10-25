@@ -15,7 +15,8 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
     Panel panelMid; //中央パネル
     Panel panelSouth;   //下部パネル
 
-    Button btLog, btExplanation;   //ログイン・ログアウトボタン, 説明ボタン
+    public Button btLog;
+    Button btExplanation;   //ログイン・ログアウトボタン, 説明ボタン
     Button btVacancy, btReservation, btConfirm, btCancel;   //空き確認, 新規予約, 予約確認, キャンセルボタン
 
     ChoiceFacility choiceFacility;  //施設選択ボックス
@@ -112,6 +113,8 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
             result = rc.getReservationOn( choiceFacility.getSelectedItem(), tfYear.getText(), tfMonth.getText(), tfDay.getText());
         } else if (e.getSource() == btExplanation) {
             result = rc.getFacilityExplanation(choiceFacility.getSelectedItem());
+        } else if (e.getSource() == btLog) {
+            result = rc.loginLogout(this);
         }
         taMessage.setText(result);
     }

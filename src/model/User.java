@@ -53,7 +53,7 @@ public class User {
                 String phone_number = rs.getString("phone_number");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
-                res += user_id + " " + name + " ~ " + address + " " + phone_number + " " + email + " " + password + "\n";
+                res += user_id + " " + name + address + " " + phone_number + " " + email + " " + password + "\n";
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

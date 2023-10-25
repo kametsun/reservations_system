@@ -1,11 +1,71 @@
 package client_system.controller;
 
+import client_system.view.MainFrame;
+import client_system.view.component.LoginDialog;
 import initialize.MyDB;
 
+import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ReservationController {
+    String reserverID;
+    private boolean isLogin;
+
+    public ReservationController(){
+        isLogin = false;
+    }
+
+    //ログイン・ログアウトボタンの処理
+    public String loginLogout(MainFrame mainFrame){
+        String res = "";
+
+        if (isLogin){
+            isLogin = false;
+            mainFrame.btLog.setLabel("ログイン");
+        } else {
+            //ログインダイアログの生成と表示
+            LoginDialog ld = new LoginDialog(mainFrame);
+            ld.setVisible(true);
+            ld.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
+            //IDとパスワードの入力がキャンセルされたら、空文字列を結果として修了
+            if (ld.canceled) {
+                return "";
+            }
+
+            //ユーザIDとパスワードが入力された場合の処理
+            //ユーザIDは他の機能のときに使用するためメンバ変数に代入
+            reserverID = ld.tfUserID.getText();
+            String password = ld.tfPassword.getText();
+
+            MyDB.connectDB();
+
+            try {
+                String sql = "SELECT * FROM db_reservation.users WHERE user_id ='" + reserverID + "';";
+                ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+                if (rs.next()){
+                    String passwordFromDB = rs.getString("password");
+                    if (passwordFromDB.equals(password)){
+                        //認証成功時: DBのIDとパスワードに一致
+                        isLogin = true;
+                        mainFrame.btLog.setLabel("ログアウト");
+                        res = "ログイン成功しました。";
+                    } else {
+                        res = "ログインできません。ID・パスワードが違います。";
+                    }
+                } else {
+                    //認証失敗: DBにユーザIDが存在しない
+                    res = "ログインできません。ID・パスワードが違います。";
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                MyDB.closeDB();
+            }
+        }
+        return res;
+    }
 
     public String getFacilityExplanation(String facilityName) {
         String res = "";
