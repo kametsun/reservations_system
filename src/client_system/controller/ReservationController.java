@@ -25,6 +25,9 @@ public class ReservationController {
                 MyDB.connectDB();
                 ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
                 int cnt = 1;
+                if (!rs.next()){
+                    res = "予約はありません。";
+                }
                 while (rs.next()) {
                     String startTime = rs.getString("start_time");
                     String endTime = rs.getString("end_time");

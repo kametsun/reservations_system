@@ -90,6 +90,7 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
         panelSouth.add(btConfirm);
         panelSouth.add(new Label("   "));
         panelSouth.add(btConfirm);
+        panelSouth.add(btCancel);
         //メイン画面に下部パネル追加
         add(panelSouth, BorderLayout.SOUTH);
 
@@ -99,7 +100,7 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
         btVacancy.addActionListener(this);
         btReservation.addActionListener(this);
         btConfirm.addActionListener(this);
-        btConfirm.addActionListener(this);
+        btCancel.addActionListener(this);
 
         addWindowListener(this);
         addKeyListener(this);
