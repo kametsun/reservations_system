@@ -7,13 +7,19 @@ import client_system.view.MainFrame;
 import client_system.view.component.LoginDialog;
 import initialize.MyDB;
 import model.Facility;
+import model.User;
 
 public class ReservationController {
     String reserverID;
     private boolean isLogin;
+    private User loginUser;
 
     public ReservationController(){
         isLogin = false;
+    }
+
+    private void Login(){
+
     }
 
     public String getReservationOfUser(){
@@ -59,6 +65,7 @@ public class ReservationController {
         if (isLogin){
             isLogin = false;
             mainFrame.btLog.setLabel("ログイン");
+            mainFrame.taLoginUser.setText("ゲストユーザー");
         } else {
             //ログインダイアログの生成と表示
             LoginDialog ld = new LoginDialog(mainFrame);
@@ -75,9 +82,8 @@ public class ReservationController {
             reserverID = ld.tfUserID.getText();
             String password = ld.tfPassword.getText();
 
-            MyDB.connectDB();
-
             try {
+                MyDB.connectDB();
                 String sql = "SELECT * FROM db_reservation.users WHERE user_id ='" + reserverID + "';";
                 ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
                 if (rs.next()){
@@ -87,6 +93,8 @@ public class ReservationController {
                         isLogin = true;
                         mainFrame.btLog.setLabel("ログアウト");
                         res = "ログイン成功しました。";
+                        loginUser = User.select(reserverID);
+                        mainFrame.taLoginUser.setText(loginUser.getName());
                     } else {
                         res = "ログインできません。ID・パスワードが違います。";
                     }

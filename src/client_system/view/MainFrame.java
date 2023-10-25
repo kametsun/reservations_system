@@ -20,6 +20,7 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
     ChoiceFacility choiceFacility;  //施設選択ボックス
     TextField tfYear, tfMonth, tfDay;   //年月日入力欄
     TextArea taMessage; //結果表示エリア
+    public TextArea taLoginUser;    // ログインしてるユーザ名
 
     public MainFrame(ReservationController rc){
         this.rc = rc;
@@ -41,9 +42,15 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
         //上中下のパネルを使うため、レイアウトマネージャーにBorderLayoutを設定
         setLayout( new BorderLayout());
 
+        //ログインユーザ名表示テキストエリア
+        taLoginUser = new TextArea("",1, 15, TextArea.SCROLLBARS_NONE);
+        taLoginUser.setText("ゲストユーザー");
+        taLoginUser.setEditable(false);
+
         //上部パネルの上パネルに || 予約システム || というラベルと || ログイン ||　ボタンを追加
         panelNorthSub1 = new Panel();
         panelNorthSub1.add(new Label("施設予約システム                      "));
+        panelNorthSub1.add(taLoginUser);    //ログインしてるユーザ表示テキストエリア
         panelNorthSub1.add(btLog);
 
         //上部パネルの中央パネルに|||施設||[施設名選択]チョイス [概要説明]ボタンを追加

@@ -38,6 +38,36 @@ public class User {
         System.out.println(res);
     }
 
+    //空のユーザを返す
+    public static User NEW(){
+        return new User("", "", "", "", "", "");
+    }
+
+    // 1件取得
+    public static User select(String user_id){
+        MyDB.connectDB();
+        String res = "";
+
+        try {
+            String sql = "SELECT * FROM db_reservation.users WHERE user_id='" + user_id + "';";
+            ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+            while (rs.next()) {
+                String userID = rs.getString("user_id");
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                String phone_number = rs.getString("phone_number");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                return new User(userID, name, address, phone_number, email, password);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            MyDB.closeDB();
+        }
+        return NEW();
+    }
+
     //全件取得
     public static void selectAll(){
         MyDB.connectDB();
@@ -61,6 +91,10 @@ public class User {
             MyDB.closeDB();
         }
         System.out.println(res);
+    }
+
+    public String getName() {
+        return name;
     }
 
     private void setUserID(String userID) {
