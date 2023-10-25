@@ -1,11 +1,9 @@
 package client_system.view;
 
-import client_system.controller.ReservationController;
-import client_system.view.component.ChoiceFacility;
-
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
+import client_system.controller.ReservationController;
+import client_system.view.component.ChoiceFacility;
 
 public class MainFrame extends Frame implements ActionListener, WindowListener, KeyListener {
     ReservationController rc;
