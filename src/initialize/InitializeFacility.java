@@ -12,9 +12,9 @@ public class InitializeFacility {
         Time[] openTimes = {Time.valueOf("09:00:00"), Time.valueOf("10:00:00")};
         Time[] closeTimes = {Time.valueOf("20:00:00"), Time.valueOf("21:00:00")};
         String[] explanations = {
-                " 客席数: 500 利用可能時間: 10時から21時", //小ホール
-                " 客席数: 80 利用可能時間: 9時から20時",   //大会議室
-                " 客席数: 20 利用可能時間: 9時から20時"    //小会議室
+                " 客席数: 500 利用可能時間: 10時 から 21時", //小ホール
+                " 客席数: 80 利用可能時間: 9時 から 20時",   //大会議室
+                " 客席数: 20 利用可能時間: 9時 から 20時"    //小会議室
         };
 
         clearTable();

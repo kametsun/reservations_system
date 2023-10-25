@@ -3,6 +3,7 @@ package client_system.controller;
 import client_system.view.MainFrame;
 import client_system.view.component.LoginDialog;
 import initialize.MyDB;
+import model.Facility;
 
 import java.awt.*;
 import java.sql.ResultSet;
@@ -14,6 +15,35 @@ public class ReservationController {
 
     public ReservationController(){
         isLogin = false;
+    }
+
+    public String getReservationOfUser(){
+        String res = "[予約状況]\n\n";
+        if (isLogin) {
+            String sql = "SELECT * FROM db_reservation.reservations WHERE reserver_id = '" + reserverID +"'" + "ORDER BY date;";
+            try {
+                MyDB.connectDB();
+                ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+                int cnt = 1;
+                while (rs.next()) {
+                    String startTime = rs.getString("start_time");
+                    String endTime = rs.getString("end_time");
+                    String date = rs.getString("date");
+                    String facilityName = rs.getString("facility_name");
+                    String explanation = Facility.getExplanation(facilityName);
+                    res += "[" + cnt + "]  " + date + " " + facilityName + " " + startTime + " ～ " + endTime + "\n\n[施設概要]\n" + explanation + "\n\n";
+                    cnt++;
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }finally {
+                MyDB.closeDB();
+            }
+            return res;
+        } else {
+            res = "ログインしてください。";
+        }
+        return res;
     }
 
     //ログイン・ログアウトボタンの処理
@@ -68,22 +98,7 @@ public class ReservationController {
     }
 
     public String getFacilityExplanation(String facilityName) {
-        String res = "";
-
-        String sql = "SELECT explanation from db_reservation.facilities WHERE name = '" + facilityName + "';";
-        MyDB.connectDB();
-
-        try {
-            ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
-            while (rs.next()) {
-                res = "[施設説明]\n\n" + rs.getString("explanation");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            MyDB.closeDB();
-        }
-
+        String res = Facility.getExplanation(facilityName);
         return res;
     }
 

@@ -115,6 +115,8 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
             result = rc.getFacilityExplanation(choiceFacility.getSelectedItem());
         } else if (e.getSource() == btLog) {
             result = rc.loginLogout(this);
+        } else if (e.getSource() == btConfirm) {
+            result = rc.getReservationOfUser();
         }
         taMessage.setText(result);
     }

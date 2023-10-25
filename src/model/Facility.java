@@ -62,6 +62,24 @@ public class Facility {
         System.out.println(res);
     }
 
+    //施設説明を取得
+    public static String getExplanation(String facilityName){
+        String res = "";
+        try {
+            MyDB.connectDB();
+            String sql = "SELECT explanation FROM db_reservation.facilities WHERE name = '" + facilityName + "';";
+            ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+            if (rs.next()) {
+                res = rs.getString("explanation");
+            } else {
+                res = "施設が見つかりませんでした。";
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
     public static List<String> getAllFacilityNames(){
         List<String> facilityNames = new ArrayList<>();
         MyDB.connectDB();
