@@ -18,14 +18,10 @@ public class ReservationController {
         isLogin = false;
     }
 
-    private void Login(){
-
-    }
-
     public String getReservationOfUser(){
         String res = "[予約状況]\n\n";
         if (isLogin) {
-            String sql = "SELECT * FROM db_reservation.reservations WHERE reserver_id = '" + reserverID +"'" + "ORDER BY date;";
+            String sql = "SELECT * FROM db_reservation.reservations WHERE reserver_id = '" + loginUser.getUserID() +"'" + "ORDER BY date;";
             try {
                 MyDB.connectDB();
                 ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
@@ -33,7 +29,6 @@ public class ReservationController {
                 boolean hasReservation = false;
                 while (rs.next()) {
                     hasReservation = true;
-                    String id = rs.getString("reservation_id");
                     String startTime = rs.getString("start_time");
                     String endTime = rs.getString("end_time");
                     String date = rs.getString("date");
@@ -111,9 +106,7 @@ public class ReservationController {
         return res;
     }
 
-    public String getFacilityExplanation(String facilityName) {
-        return Facility.getExplanation(facilityName);
-    }
+    public String getFacilityExplanation(String facilityName) { return Facility.getExplanation(facilityName); }
 
     public String getReservationOn(String facilityName, String ryer_str, String rmonth_str, String rday_str){
         String res = "";
@@ -140,9 +133,8 @@ public class ReservationController {
         //SQLで検索するためフォーマット作成
         String rdate = ryer_str + "-" + rmonth_str + "-" + rday_str;
 
-        MyDB.connectDB();
-
         try {
+            MyDB.connectDB();
             String sql = "SELECT * FROM db_reservation.reservations WHERE date ='" + rdate + "' AND facility_name = '" + facilityName + "' ORDER BY start_time;";
             ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
             boolean isExist = false;

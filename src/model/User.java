@@ -97,6 +97,10 @@ public class User {
         return name;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
     private void setUserID(String userID) {
         this.userID = userID;
     }
