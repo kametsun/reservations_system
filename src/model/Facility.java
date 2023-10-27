@@ -20,6 +20,35 @@ public class Facility {
         setExplanation(explanation);
     }
 
+    public static Facility NEW(){
+        return new  Facility("", Time.valueOf(""), Time.valueOf(""), "");
+    }
+
+    public static Facility getFacilityByName(String facilityName){
+        Facility facility = Facility.NEW();
+        MyDB.connectDB();
+
+        try {
+            String sql = "SELECT * FROM db_reservation.facilities WHERE name='" + facilityName + "';";
+            ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+
+            if (rs.next()){
+                String name = rs.getString("name");
+                String openTime = rs.getString("open_time");
+                String closeTime = rs.getString("close_time");
+                String explanation = rs.getString("explanation");
+                facility = new Facility(name, Time.valueOf(openTime), Time.valueOf(closeTime), explanation);
+            } else {
+                return facility;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            MyDB.closeDB();
+        }
+        return facility;
+    }
+
     //施設登録メソッド
     public static void insert(Facility facility){
         String res = "";

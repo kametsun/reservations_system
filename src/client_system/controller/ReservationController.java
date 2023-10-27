@@ -3,8 +3,11 @@ package client_system.controller;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+
 import client_system.view.MainFrame;
 import client_system.view.component.LoginDialog;
+import client_system.view.component.ReservationDialog;
 import initialize.MyDB;
 import model.Facility;
 import model.User;
@@ -50,6 +53,130 @@ public class ReservationController {
         } else {
             res = "ログインしてください。";
         }
+        return res;
+    }
+
+    //予約日の期間の条件をチェックするメソッド
+    private boolean checkReservationDate(int yyyy, int MM, int dd){
+        //予約日
+        Calendar dateR = Calendar.getInstance();
+        dateR.set(yyyy, MM - 1, dd);     //月から1引かなければならないことに注意
+
+        //今日の1日後
+        Calendar date1 = Calendar.getInstance();
+        date1.add(Calendar.DATE, 1);
+
+        //今日の3ヶ月後(90日後)
+        Calendar date2 = Calendar.getInstance();
+        date2.add(Calendar.DATE, 90);
+
+        if (dateR.after(date1) && dateR.before(date2)){
+            return true;
+        }
+        return false;
+    }
+
+    public String makeReservation(MainFrame frame){
+        String res = "";
+
+        if (isLogin){
+            //新規予約画面作成
+            ReservationDialog rd = new ReservationDialog(frame);
+
+            //新規予約画面の予約日にメイン画面に設定されている年月日を設定する
+            rd.tfYear.setText(frame.tfYear.getText());
+            rd.tfMonth.setText(frame.tfMonth.getText());
+            rd.tfDay.setText(frame.tfDay.getText());
+
+            //新規予約画面を可視化
+            rd.setVisible(true);
+            if (rd.canceled){
+                return res;
+            }
+
+            try {
+                //新規予約画面から年月日を取得
+                String strYear = rd.tfYear.getText();
+                String strMonth = rd.tfMonth.getText();
+                String strDay = rd.tfDay.getText();
+
+                //年月日が数字かどうかチェック
+                int intYear = Integer.parseInt(strYear);
+                int intMonth = Integer.parseInt(strMonth);
+                int intDay = Integer.parseInt(strDay);
+
+                if (checkReservationDate(intYear, intMonth, intDay)){
+                    //新規予約画面から施設名、開始時刻、終了時刻を取得
+                    String facility = rd.choiceFacility.getSelectedItem();
+                    String st = rd.startHour.getSelectedItem() + ":" + rd.startMinute.getSelectedItem() + ":00";
+                    String et = rd.endHour.getSelectedItem() + ":" + rd.endMinute.getSelectedItem() + ":00";
+
+                    //開始時刻と終了時刻が同じ
+                    if (st.equals(et)){
+                        res = "開始時刻と終了時刻が同じです";
+                    } else {
+
+                      MyDB.connectDB();
+
+                      try {
+
+                          //月と日が一桁だったら、前に0をつける処理
+                          if (strMonth.length() == 1){
+                              strMonth = "0" + strMonth;
+                          }
+                          if (strDay.length() == 1){
+                              strDay = "0" + strDay;
+                          }
+
+                          String strDate = strYear + "-" + strMonth + "-" + strDay;
+                          //指定した施設の指定した予約日の予約情報を取得するクエリ
+                          String sql = "SELECT * FROM db_reservation.reservations WHERE facility_name = '" + facility + "' AND date = '" + strDate + "';";
+                          ResultSet rs = MyDB.sqlStmt.executeQuery(sql);
+
+                          //重なりチェックの結果の初期値 (重なっていない=false)
+                          boolean ng = false;
+
+                          //取得したレコードに対して確認
+                          while (rs.next()){
+                              String start = rs.getString("start_time");
+                              String end = rs.getString("end_time");
+
+                              if ( (start.compareTo(st) < 0 && st.compareTo(end) < 0) || (st.compareTo(start) < 0 && start.compareTo(et) < 0) )
+                              {
+                                  //重複有りの場合にngをtrueに設定
+                                  ng = true;
+                                  break;
+                              }
+                          }
+                          // 重なりチェック終了
+
+                          //重なっていない場合
+                          if (!ng) {
+                              //予約挿入
+                              sql = "INSERT INTO db_reservation.reservations ( date, start_time, end_time, reserver_id, facility_name ) VALUES ( '";
+                              sql += strDate + "', '" + st + "','" + et + "','" + reserverID + "','" + facility + "' );";
+
+                              int rsInt = MyDB.sqlStmt.executeUpdate(sql);
+                              return "予約されました";
+                          } else {
+                              return "既にある予約と重なっています";
+                          }
+                      } catch (SQLException e) {
+                          throw new RuntimeException(e);
+                      } finally {
+                          MyDB.closeDB();
+                      }
+                    }
+                } else {
+                    return "予約日が無効です";
+                }
+            } catch (NumberFormatException e) {
+                return "予約日には数字を指定してください。";
+            }
+        } else {
+            return "ログインしてください。";
+        }
+
         return res;
     }
 

@@ -18,7 +18,9 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
     Button btVacancy, btReservation, btConfirm, btCancel;   //空き確認, 新規予約, 予約確認, キャンセルボタン
 
     ChoiceFacility choiceFacility;  //施設選択ボックス
-    TextField tfYear, tfMonth, tfDay;   //年月日入力欄
+    public TextField tfYear;
+    public TextField tfMonth;
+    public TextField tfDay;   //年月日入力欄
     TextArea taMessage; //結果表示エリア
     public TextArea taLoginUser;    // ログインしてるユーザ名
 
@@ -124,6 +126,8 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
             result = rc.loginLogout(this);
         } else if (e.getSource() == btConfirm) {
             result = rc.getReservationOfUser();
+        } else if (e.getSource() == btReservation) {    //新規予約ボタン
+            result = rc.makeReservation(this);
         }
         taMessage.setText(result);
     }
