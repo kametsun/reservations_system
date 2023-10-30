@@ -105,10 +105,11 @@ public class Weather {
         this.cod = cod;
     }
 
-    //天気予報を受け取るAPIキー
-    private static final String apiKey = "eb8f88aedd3e31372198e1dc924fac91";
 
     public static String getWeather(){
+        //天気予報を受け取るAPIキー
+        String apiKey = System.getenv("OPEN_WEATHER_API");
+
         String apiURL = "https://api.openweathermap.org/data/2.5/weather?lat=34.983309150897824&lon=138.40685919693365&q=shizuoka&lang=ja&units=metric&appid=" + apiKey;
 
         try {
