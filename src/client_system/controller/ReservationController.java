@@ -4,12 +4,15 @@ import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.List;
 
 import client_system.view.MainFrame;
+import client_system.view.component.CancelDialog;
 import client_system.view.component.LoginDialog;
 import client_system.view.component.ReservationDialog;
 import initialize.MyDB;
 import model.Facility;
+import model.Reservation;
 import model.User;
 
 public class ReservationController {
@@ -74,6 +77,52 @@ public class ReservationController {
             return true;
         }
         return false;
+    }
+
+    public String cancelReservation(MainFrame frame){
+        List<Reservation> reservations;
+        int cancelReservationCnt = 0;
+        if (isLogin) {
+            reservations = Reservation.getReservationListByUser(loginUser.getUserID());
+            //キャンセルダイアログ
+            CancelDialog cancelDialog = new CancelDialog(frame, reservations);
+            cancelDialog.setVisible(true);
+
+
+            for (int i = 0; i < cancelDialog.checkboxNumber; i++)
+            {
+                Checkbox checkbox = (Checkbox) cancelDialog.panelMid.getComponent(i);
+                if ( checkbox.getState() )
+                {
+                    int reservationID = reservations.get(i).getReservationID();
+                    MyDB.connectDB();
+                    //idで予約を削除するSQL
+                    String sql = "DELETE FROM db_reservation.reservations WHERE reservation_id = '" + reservationID + "';";
+                    try {
+                        int rsInt = MyDB.sqlStmt.executeUpdate(sql);
+                        if (rsInt > 0)
+                        {
+                            cancelReservationCnt++; //キャンセル数インクリメント
+                        } else {
+                            return "予約をキャンセルできませんでした。";
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    } finally {
+                        MyDB.closeDB();
+                    }
+                }
+            }
+        } else {
+            return "ログインしてください。";
+        }
+
+        if (cancelReservationCnt > 0)
+        {
+            return cancelReservationCnt + " 件の予約をキャンセルしました。";
+        } else {
+            return "選択された予約はキャンセルできませんでした。";
+        }
     }
 
     public String makeReservation(MainFrame frame){
@@ -281,5 +330,9 @@ public class ReservationController {
         }
 
         return res;
+    }
+
+    public User getLoginUser() {
+        return loginUser;
     }
 }

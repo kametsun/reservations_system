@@ -129,6 +129,10 @@ public class Facility {
         return facilityNames;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void setName(String name) {
         this.name = name;
     }

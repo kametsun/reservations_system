@@ -1,6 +1,10 @@
 package model;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import initialize.MyDB;
 public class Reservation {
     private int reservationID;
@@ -8,12 +12,30 @@ public class Reservation {
     private Date date;
     private Time startTime, endTime;
 
+
     public Reservation(String reserverID, String facilityName, Date date, Time startTime, Time endTime) {
         setReserverID(reserverID);
         setFacilityName(facilityName);
         setDate(date);
         setStartTime(startTime);
         setEndTime(endTime);
+    }
+
+    public Reservation(String reserverID, String facilityName, String strDate, String strStartTime, String strEndTime){
+        setReserverID(reserverID);
+        setFacilityName(facilityName);
+        setDate(Date.valueOf(strDate));
+        setStartTime(Time.valueOf(strStartTime));
+        setEndTime(Time.valueOf(strEndTime));
+    }
+
+    public Reservation(String id, String userID, String facilityName, String date, String startTime, String endTime) {
+        setReservationID(Integer.parseInt(id));
+        setReserverID(userID);
+        setFacilityName(facilityName);
+        setDate(Date.valueOf(date));
+        setStartTime(Time.valueOf(startTime));
+        setEndTime(Time.valueOf(endTime));
     }
 
     //予約登録
@@ -60,6 +82,63 @@ public class Reservation {
         System.out.println(res);
     }
 
+    public static List<Reservation> getReservationListByUser(String userID){
+        List<Reservation> reservations = new ArrayList<>();
+        MyDB.connectDB();
+
+        try {
+            String sql = "SELECT * FROM db_reservation.reservations WHERE reserver_id = ?";
+            PreparedStatement preparedStatement = MyDB.sqlCon.prepareStatement(sql);
+            preparedStatement.setString(1, userID);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                String id = rs.getString("reservation_id");
+                String date = rs.getString("date");
+                String startTime = rs.getString("start_time");
+                String endTime = rs.getString("end_time");
+                String facilityName = rs.getString("facility_name");
+
+                Reservation reservation = new Reservation(id, userID, facilityName, date, startTime, endTime);
+                reservations.add(reservation);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+          MyDB.closeDB();
+        }
+
+        return reservations;
+    }
+
+
+    public void setReservationID(int reservationID) {
+        this.reservationID = reservationID;
+    }
+
+    public int getReservationID() {
+        return reservationID;
+    }
+
+    public String getReserverID() {
+        return reserverID;
+    }
+
+    public String getFacilityName() {
+        return facilityName;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
 
     private void setReserverID(String reserverID) {
         this.reserverID = reserverID;

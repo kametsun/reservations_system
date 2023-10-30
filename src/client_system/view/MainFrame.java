@@ -128,6 +128,8 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
             result = rc.getReservationOfUser();
         } else if (e.getSource() == btReservation) {    //新規予約ボタン
             result = rc.makeReservation(this);
+        } else if (e.getSource() == btCancel) {
+            result = rc.cancelReservation(this);
         }
         taMessage.setText(result);
     }
