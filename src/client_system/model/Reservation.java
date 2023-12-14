@@ -1,11 +1,10 @@
-package model;
+package client_system.model;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import initialize.MyDB;
+import client_system.DB.MyDB;
 public class Reservation {
     private int reservationID;
     private String reserverID, facilityName;

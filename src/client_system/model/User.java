@@ -1,8 +1,8 @@
-package model;
+package client_system.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import initialize.MyDB;
+import client_system.DB.MyDB;
 
 public class User {
     private String userID;

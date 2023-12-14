@@ -1,4 +1,4 @@
-package initialize;
+package client_system.initialize;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -7,7 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import model.Reservation;
+
+import client_system.DB.MyDB;
+import client_system.model.Reservation;
 
 public class InitializeReservation {
     protected static void initialize() throws ParseException {

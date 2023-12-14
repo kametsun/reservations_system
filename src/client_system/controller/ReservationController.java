@@ -10,10 +10,10 @@ import client_system.view.MainFrame;
 import client_system.view.component.CancelDialog;
 import client_system.view.component.LoginDialog;
 import client_system.view.component.ReservationDialog;
-import initialize.MyDB;
-import model.Facility;
-import model.Reservation;
-import model.User;
+import client_system.DB.MyDB;
+import client_system.model.Facility;
+import client_system.model.Reservation;
+import client_system.model.User;
 
 public class ReservationController {
     String reserverID;
@@ -164,11 +164,9 @@ public class ReservationController {
                     if (st.equals(et)){
                         res = "開始時刻と終了時刻が同じです";
                     } else {
-
                       MyDB.connectDB();
 
                       try {
-
                           //月と日が一桁だったら、前に0をつける処理
                           if (strMonth.length() == 1){
                               strMonth = "0" + strMonth;

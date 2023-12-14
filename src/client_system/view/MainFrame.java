@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import client_system.controller.ReservationController;
 import client_system.view.component.ChoiceFacility;
+//import weather.Weather;
 
 public class MainFrame extends Frame implements ActionListener, WindowListener, KeyListener {
     ReservationController rc;
@@ -23,6 +24,8 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
     public TextField tfDay;   //年月日入力欄
     TextArea taMessage; //結果表示エリア
     public TextArea taLoginUser;    // ログインしてるユーザ名
+    //天気情報を格納する
+    //public Weather weather;
 
     public MainFrame(ReservationController rc){
         this.rc = rc;
@@ -51,7 +54,9 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
 
         //上部パネルの上パネルに || 予約システム || というラベルと || ログイン ||　ボタンを追加
         panelNorthSub1 = new Panel();
-        panelNorthSub1.add(new Label("施設予約システム                      "));
+        //weather = Weather.parseJson(Weather.getWeather());
+        //panelNorthSub1.add(new Label( weather.getName() + " " + weather.getMain().getTemp() + "℃     "));
+        panelNorthSub1.add(new Label("施設予約システム                  "));
         panelNorthSub1.add(taLoginUser);    //ログインしてるユーザ表示テキストエリア
         panelNorthSub1.add(btLog);
 
@@ -84,6 +89,7 @@ public class MainFrame extends Frame implements ActionListener, WindowListener, 
         //中央パネルにテキストメッセージ欄を設定
         panelMid = new Panel();
         taMessage = new TextArea(20, 80);
+        taMessage.setText("Welcome to 予約システム!!");
 
         taMessage.setEditable(false);
         panelMid.add(taMessage);

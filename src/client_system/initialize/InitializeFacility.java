@@ -1,10 +1,12 @@
-package initialize;
+package client_system.initialize;
 
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import model.Facility;
+
+import client_system.DB.MyDB;
+import client_system.model.Facility;
 
 public class InitializeFacility {
     protected static void initialize(){

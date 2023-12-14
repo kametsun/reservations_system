@@ -1,9 +1,11 @@
-package initialize;
+package client_system.initialize;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.User;
+
+import client_system.DB.MyDB;
+import client_system.model.User;
 
 public class InitializeUser {
     //初期データ挿入メソッド

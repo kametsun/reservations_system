@@ -1,4 +1,4 @@
-package initialize;
+package client_system.DB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

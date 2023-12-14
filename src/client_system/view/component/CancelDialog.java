@@ -1,7 +1,8 @@
 package client_system.view.component;
 
-import model.Reservation;
+import client_system.model.Reservation;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,8 +51,8 @@ public class CancelDialog extends Dialog implements ActionListener, WindowListen
         panelNorth.add(new Label("予約の取り消し"), FlowLayout.LEFT);
 
 
-        //文字列resの戦闘には予約状況\n\nがあるため、最初の2行はレコードではない
-        //レコードはreservation[2]からreservation[n - 1]二設定
+        //文字列resの先頭には予約状況\n\nがあるため、最初の2行はレコードではない
+        //レコードはreservation[2]からreservation[n - 1]に設定
         //縦を予約のレコードの数にしたグリッドレイアウトに設定
         panelMid = new Panel(new GridLayout(reservations.size(), 1));
 
@@ -89,6 +90,16 @@ public class CancelDialog extends Dialog implements ActionListener, WindowListen
         //ウィンドウの大きさを設定
         this.setBounds(100, 100, 500, 220);
     }
+
+    private void showConfirmationDialog() {
+        int result = JOptionPane.showConfirmDialog(this, "本当に削除しますか？", "確認", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            //Yesが押された時の処理 -> キャンセル実行
+            canceled = false;
+            setVisible(false);
+            dispose();
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btCancel)
@@ -98,9 +109,7 @@ public class CancelDialog extends Dialog implements ActionListener, WindowListen
         }
         else if (e.getSource() == btOK)
         {
-            canceled = false;
-            setVisible(false);
-            dispose();
+            showConfirmationDialog();
         }
     }
 

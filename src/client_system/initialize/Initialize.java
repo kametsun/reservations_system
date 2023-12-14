@@ -1,9 +1,9 @@
-package initialize;
+package client_system.initialize;
 
 import java.text.ParseException;
-import model.Facility;
-import model.Reservation;
-import model.User;
+import client_system.model.Facility;
+import client_system.model.Reservation;
+import client_system.model.User;
 
 public class Initialize {
     public static void main(String[] args) throws ParseException {

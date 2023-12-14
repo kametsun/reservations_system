@@ -1,4 +1,4 @@
-package model;
+package client_system.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,7 +6,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import initialize.MyDB;
+import client_system.DB.MyDB;
 
 public class Facility {
     private String name;
